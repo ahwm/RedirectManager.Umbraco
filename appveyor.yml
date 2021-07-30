@@ -9,7 +9,7 @@ before_build:
 build:
   verbosity: minimal
 artifacts:
-- path: src\Akismet.Umbraco8\bin\Release\Umbraco.RedirectManager.Core.*.nupkg
+- path: src\Umbraco.RedirectManager\bin\Release\Umbraco.RedirectManager.Core.*.nupkg
   name: NuGet
 - path: Umbraco.RedirectManager.*.nupkg
   name: NuGet
