@@ -1,0 +1,68 @@
+﻿
+<div ng-controller="RedirectsController as vm">
+    <umb-editor-view footer="false">
+        <umb-editor-header name="vm.page.name"
+                           hide-alias="true"
+                           hide-description="true"
+                           name-locked="true"
+                           hide-icon="true">
+        </umb-editor-header>
+
+        <umb-editor-container>
+            <div class="container-fluid" style="margin-bottom:20px;">
+                <div class="row-fluid">
+                    <div class="span1">
+                        <umb-button type="button"
+                                    label="Add Redirect"
+                                    button-style="primary"
+                                    action="vm.addRedirect()"
+                                    state="vm.addState">
+                        </umb-button>
+                    </div>
+                    <div class="span9">
+                        <input type="file" id="uplredirects" ngf-select
+                               ngf-model="filesHolder"
+                               ngf-change="handleFiles($files, $event)"
+                               ngf-multipart="true"
+                               accept=".xls,.xlsx,.txt,.tsv,.csv"/>
+                        <umb-button type="button" action="upload(file)" button-style="success" label="Import Redirects" state="uploadState" disabled="uploadState == 'busy' || !file"></umb-button>
+                    </div>
+                    <div class="span2">
+                        <umb-search-filter name="search" model="vm.filterModel" on-change="vm.filter(val)" text="Filter" prevent-submit-on-enter="true"></umb-search-filter>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+                    <umb-table items="vm.items"
+                               item-properties="vm.options.includeProperties"
+                               allow-select-all="vm.allowSelectAll"
+                               on-select="vm.selectItem(item, $index, $event)"
+                               on-select-all="vm.selectAll()"
+                               on-selected-all="vm.isSelectedAll()">
+                    </umb-table>
+                    <umb-empty-state ng-if="!vm.items || vm.items.length == 0" position="center">
+                        <div>No redirects currently defined</div>
+                    </umb-empty-state>
+                </div>
+                <div class="row">
+                    <umb-pagination page-number="vm.pagination.pageNumber"
+                                    total-pages="vm.pagination.totalPages"
+                                    on-next="vm.changePage(pageNumber)"
+                                    on-prev="vm.changePage(pageNumber)"
+                                    on-change="vm.changePage(pageNumber)"
+                                    on-go-to-page="vm.changePage(pageNumber)">
+                    </umb-pagination>
+                </div>
+            </div>
+        </umb-editor-container>
+
+        <umb-editor-footer>
+            <umb-editor-footer-content-right id="bulkActions" style="display:none;">
+                <umb-button type="button" action="vm.deleteRedirects()" button-style="success" label="Delete" state="vm.deleteState"></umb-button>
+            </umb-editor-footer-content-right>
+        </umb-editor-footer>
+
+    </umb-editor-view>
+</div>

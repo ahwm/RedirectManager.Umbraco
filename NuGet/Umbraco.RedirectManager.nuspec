@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <!-- Required elements-->
+        <id>Umbraco.RedirectManager</id>
+        <version>1.0</version>
+        <description>Redirect Manager for Umbraco 8</description>
+        <authors>Adam Humpherys</authors>
+		<license type="expression">MIT</license>
+		<releaseNotes>Initial release; please report issues at https://github.com/ahwm/Umbraco.RedirectManager/issues</releaseNotes>
+		<repository type="git" url="https://github.com/ahwm/Umbraco.RedirectManager" />
+		<projectUrl>https://github.com/ahwm/Umbraco.RedirectManager</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+        <dependencies>
+			<dependency id="Umbraco.RedirectManager.Core" version="1.0.0" />
+		</dependencies>
+    </metadata>
+</package>
