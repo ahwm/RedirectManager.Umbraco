@@ -2,15 +2,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net472</TargetFramework>
-		<PackageId>Umbraco.RedirectManager.Core</PackageId>
+		<PackageId>RedirectManager.Umbraco8.Core</PackageId>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Adam Humpherys</Authors>
 		<Description>Redirect Manager for Umbraco 8</Description>
 		<Copyright>(c) 2021 Adam Humpherys</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/ahwm/Umbraco.RedirectManager</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/ahwm/Umbraco.RedirectManager</RepositoryUrl>
-		<PackageReleaseNotes>Initial Release; please report issues at https://github.com/ahwm/Umbraco.RedirectManager/issues</PackageReleaseNotes>
+		<PackageProjectUrl>https://github.com/ahwm/RedirectManager.Umbraco</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/ahwm/RedirectManager.Umbraco</RepositoryUrl>
+		<PackageReleaseNotes>Initial Release; please report issues at https://github.com/ahwm/RedirectManager.Umbraco/issues</PackageReleaseNotes>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Version>1.0</Version>
