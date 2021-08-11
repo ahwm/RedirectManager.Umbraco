@@ -1,0 +1,14 @@
+﻿<div class="row">
+    <p>Redirects can be imported in bulk using either <code>.xlsx</code>, <code>.xls</code>, <code>.csv</code>, <code>.txt</code>, or <code>.tsv</code> files.</p>
+    <p>Files with a <code>.txt</code> extension are treated as tab-delimited.</p>
+    <p>Import files should be in the following format (illustrated as CSV):</p>
+    <pre>
+        <code>
+ OldUrl,NewUrl
+ /old-url,/new-url
+ /old-url1.aspx,https://example.com
+ /old-url/,/
+        </code>
+    </pre>
+    <p>The <code>OldUrl</code> and <code>NewUrl</code> columns must exist, but they need not necessarily be in this order. The <code>OldUrl</code> value must be prefixed with a <code>/</code>. If <code>NewUrl</code> is on the same host, it should also be prefixed with <code>/</code>, otherwise should be prefeixed with the scheme (<code>http://</code> or <code>https://</code>).</p>
+</div>

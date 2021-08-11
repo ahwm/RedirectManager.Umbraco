@@ -158,6 +158,17 @@
         }
     };
 
+    vm.showInfo = function () {
+        overlayService.open({
+            title: "Importing Redirects",
+            view: "/App_Plugins/Redirects/Views/Overlays/ImportInfo.html",
+            closeButtonLabel: "Close",
+            close: function close() {
+                overlayService.close();
+            }
+        });
+    };
+
     function changePage(pageNumber) {
         if (pageNumber != undefined) {
             vm.items = [];

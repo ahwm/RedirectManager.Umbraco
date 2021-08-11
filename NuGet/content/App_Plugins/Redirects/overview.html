@@ -26,6 +26,7 @@
                                ngf-multipart="true"
                                accept=".xls,.xlsx,.txt,.tsv,.csv"/>
                         <umb-button type="button" action="upload(file)" button-style="success" label="Import Redirects" state="uploadState" disabled="uploadState == 'busy' || !file"></umb-button>
+                        <umb-button type="link" action="vm.showInfo()" label="Import Info"></umb-button>
                     </div>
                     <div class="span2">
                         <umb-search-filter name="search" model="vm.filterModel" on-change="vm.filter(val)" text="Filter" prevent-submit-on-enter="true"></umb-search-filter>
