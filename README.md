@@ -3,7 +3,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/95e8264cttd50qg3/branch/master)](https://ci.appveyor.com/project/ahwm/redirectmanager-umbraco/branch/master)
 [![NuGet Status](https://buildstats.info/nuget/RedirectManager.Umbraco8)](https://www.nuget.org/packages/RedirectManager.Umbraco8/)
 
-![image](https://user-images.githubusercontent.com/20478373/127723661-29e68804-c48f-4432-ae32-371975649b33.png)
+![image](https://user-images.githubusercontent.com/20478373/129051682-48203c60-3075-44c0-8c52-8aaf1f78a6af.png)
 
 This package gives the admin/editor the ability to define any page redirect quickly and easily.
 
