@@ -3,11 +3,11 @@
     <metadata>
         <!-- Required elements-->
         <id>RedirectManager.Umbraco8</id>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
         <description>Redirect Manager for Umbraco 8</description>
         <authors>Adam Humpherys</authors>
 		<license type="expression">MIT</license>
-		<releaseNotes>Added import information; please report issues at https://github.com/ahwm/RedirectManager.Umbraco/issues</releaseNotes>
+		<releaseNotes>Fixed footer view covering pager on some screens; please report issues at https://github.com/ahwm/RedirectManager.Umbraco/issues</releaseNotes>
 		<repository type="git" url="https://github.com/ahwm/RedirectManager.Umbraco" />
 		<projectUrl>https://github.com/ahwm/RedirectManager.Umbraco</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
