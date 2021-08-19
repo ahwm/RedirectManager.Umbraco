@@ -10,10 +10,10 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/ahwm/RedirectManager.Umbraco</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ahwm/RedirectManager.Umbraco</RepositoryUrl>
-		<PackageReleaseNotes>Initial Release; please report issues at https://github.com/ahwm/RedirectManager.Umbraco/issues</PackageReleaseNotes>
+		<PackageReleaseNotes>Small bugfix; please report issues at https://github.com/ahwm/RedirectManager.Umbraco/issues</PackageReleaseNotes>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>1.0</Version>
+		<Version>1.0.1</Version>
 	</PropertyGroup>
 
 	<ItemGroup>

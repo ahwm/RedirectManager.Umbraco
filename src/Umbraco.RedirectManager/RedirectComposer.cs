@@ -98,16 +98,16 @@ namespace RedirectManager
 
         public override void Migrate()
         {
-            Logger.Debug<AddRedirectsTable>("Running migration {MigrationStep}", "AddAkismetCommentsTable");
+            Logger.Debug<AddRedirectsTable>("Running migration {MigrationStep}", "AddRedirectsTable");
 
             // Lots of methods available in the MigrationBase class - discover with this.
-            if (TableExists("AkismetComments") == false)
+            if (TableExists("Redirect") == false)
             {
                 Create.Table<RedirectSchema>().Do();
             }
             else
             {
-                Logger.Debug<AddRedirectsTable>("The database table {DbTable} already exists, skipping", "AkismetComments");
+                Logger.Debug<AddRedirectsTable>("The database table {DbTable} already exists, skipping", "Redirect");
             }
         }
 

@@ -8,7 +8,7 @@ using Umbraco.Web.WebApi.Filters;
 
 namespace RedirectManager.Controllers
 {
-    [Tree("settings", "redirects", TreeTitle = "Redirects", TreeGroup = "redirectsGroup", SortOrder = 5)]
+    [Tree("redirects", "redirects", TreeTitle = "Redirects", TreeGroup = "redirectsGroup", SortOrder = 5)]
     public class RedirectTreeController : TreeController
     {
         protected override TreeNode CreateRootNode(FormDataCollection queryStrings)
