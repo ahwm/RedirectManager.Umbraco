@@ -5,7 +5,7 @@ before_build:
 - cmd: >-
     nuget restore src\Umbraco.RedirectManager.sln
 
-    nuget pack NuGet\Umbraco.RedirectManager.nuspec -suffix ci -Version %APPVEYOR_BUILD_VERSION%
+    nuget pack NuGet\Umbraco.RedirectManager.nuspec -suffix ci -Version %APPVEYOR_BUILD_VERSION% -p commitid=%APPVEYOR_REPO_COMMIT%
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'

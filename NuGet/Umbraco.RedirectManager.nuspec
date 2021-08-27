@@ -8,8 +8,7 @@
         <authors>Adam Humpherys</authors>
 		<license type="expression">MIT</license>
 		<releaseNotes>Fixed footer view covering pager on some screens; please report issues at https://github.com/ahwm/RedirectManager.Umbraco/issues</releaseNotes>
-		<repository type="git" url="https://github.com/ahwm/RedirectManager.Umbraco" />
-		<RepositoryUrl>https://github.com/ahwm/RedirectManager.Umbraco</RepositoryUrl>
+		<repository type="git" url="https://github.com/ahwm/RedirectManager.Umbraco.git" branch="dev" commit="$commitid$" />
 		<projectUrl>https://github.com/ahwm/RedirectManager.Umbraco</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 
