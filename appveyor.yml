@@ -1,22 +1,24 @@
-version: 1.0.2
+version: 1.0.2.{build}
 image: Visual Studio 2019
 configuration: Release
 before_build:
 - ps: >-
+    $version = $env:APPVEYOR_BUILD_VERSION -replace ".$APPVEYOR_BUILD_NUMBER",''
+
     nuget restore src\Umbraco.RedirectManager.sln
 
-    nuget pack NuGet\Umbraco.RedirectManager.nuspec -Version $env:APPVEYOR_BUILD_VERSION -p "commitid=$env:APPVEYOR_REPO_COMMIT;coreVersion=$env:APPVEYOR_BUILD_VERSION;releaseNotes=$env:APPVEYOR_REPO_COMMIT_MESSAGE$env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"
+    nuget pack NuGet\Umbraco.RedirectManager.nuspec -Version $version -p "commitid=$env:APPVEYOR_REPO_COMMIT;coreVersion=$version;releaseNotes=$env:APPVEYOR_REPO_COMMIT_MESSAGE$env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"
 
     (Get-Content -path src\Umbraco.RedirectManager\Umbraco.RedirectManager.csproj -Raw) -replace '%releaseNotes%',"$env:APPVEYOR_REPO_COMMIT_MESSAGE$env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"| Set-Content -Path src\Umbraco.RedirectManager\Umbraco.RedirectManager.csproj
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: '{version}'
-  version_prefix: '{version}'
-  package_version: '{version}'
-  assembly_version: '{version}'
-  file_version: '{version}'
-  informational_version: '{version}'
+  version: '1.0.2'
+  version_prefix: '1.0.2'
+  package_version: '1.0.2'
+  assembly_version: '1.0.2'
+  file_version: '1.0.2'
+  informational_version: '1.0.2'
 build:
   verbosity: minimal
 artifacts:
