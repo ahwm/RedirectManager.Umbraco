@@ -4,7 +4,7 @@ configuration: Release
 before_build:
 - ps: >-
     $version = '1.0.2'
-	
+
     nuget restore src\Umbraco.RedirectManager.sln
 
     nuget pack NuGet\Umbraco.RedirectManager.nuspec -Version $version -p "commitid=$env:APPVEYOR_REPO_COMMIT;coreVersion=$version;releaseNotes=$env:APPVEYOR_REPO_COMMIT_MESSAGE$env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"
