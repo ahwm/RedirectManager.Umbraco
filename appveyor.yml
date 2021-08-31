@@ -3,10 +3,8 @@ image: Visual Studio 2019
 configuration: Release
 before_build:
 - ps: >-
-    $version = "$env:APPVEYOR_BUILD_VERSION" -replace ".$APPVEYOR_BUILD_NUMBER",''
-
-    echo 'version:'$version
-
+    $version = '1.0.2'
+	
     nuget restore src\Umbraco.RedirectManager.sln
 
     nuget pack NuGet\Umbraco.RedirectManager.nuspec -Version $version -p "commitid=$env:APPVEYOR_REPO_COMMIT;coreVersion=$version;releaseNotes=$env:APPVEYOR_REPO_COMMIT_MESSAGE$env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"
