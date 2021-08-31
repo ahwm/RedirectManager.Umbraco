@@ -2,10 +2,10 @@ version: 1.0.2.{build}
 image: Visual Studio 2019
 configuration: Debug
 before_build:
-- cmd: >-
+- ps: >-
     nuget restore src\Umbraco.RedirectManager.sln
 
-    nuget pack NuGet\Umbraco.RedirectManager.nuspec -suffix ci -Version %APPVEYOR_BUILD_VERSION% -p commitid=%APPVEYOR_REPO_COMMIT%;coreVersion=%APPVEYOR_BUILD_VERSION%-ci
+    nuget pack NuGet\Umbraco.RedirectManager.nuspec -suffix ci -Version %APPVEYOR_BUILD_VERSION% -p commitid=%APPVEYOR_REPO_COMMIT%;coreVersion=%APPVEYOR_BUILD_VERSION%-ci;releaseNotes="%APPVEYOR_REPO_COMMIT_MESSAGE%%APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED%"
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
