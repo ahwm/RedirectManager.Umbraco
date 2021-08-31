@@ -3,7 +3,7 @@
     <metadata>
         <!-- Required elements-->
         <id>RedirectManager.Umbraco8</id>
-        <version>1.0.2</version>
+        <version>$coreVersion$</version>
         <description>Redirect Manager for Umbraco 8</description>
         <authors>Adam Humpherys</authors>
         <license type="expression">MIT</license>
