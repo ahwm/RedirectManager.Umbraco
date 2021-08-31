@@ -1,20 +1,38 @@
-version: 1.0.{build}
+version: 1.0.2
 image: Visual Studio 2019
 configuration: Release
 before_build:
-- cmd: >-
+- ps: >-
     nuget restore src\Umbraco.RedirectManager.sln
 
-    nuget pack NuGet\Umbraco.RedirectManager.nuspec
+    nuget pack NuGet\Umbraco.RedirectManager.nuspec -Version $env:APPVEYOR_BUILD_VERSION -p "commitid=$env:APPVEYOR_REPO_COMMIT;coreVersion=$env:APPVEYOR_BUILD_VERSION;releaseNotes=$env:APPVEYOR_REPO_COMMIT_MESSAGE$env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"
+
+    (Get-Content -path src\Umbraco.RedirectManager\Umbraco.RedirectManager.csproj -Raw) -replace '%releaseNotes%',"$env:APPVEYOR_REPO_COMMIT_MESSAGE$env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"| Set-Content -Path src\Umbraco.RedirectManager\Umbraco.RedirectManager.csproj
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  version_prefix: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
 build:
   verbosity: minimal
 artifacts:
-- path: src\Umbraco.RedirectManager\bin\Release\RedirectManager.Umbraco8.Core.*.nupkg
-  name: NuGet
-- path: RedirectManager.Umbraco8.*.nupkg
-  name: NuGet
-deploy:
-- provider: NuGet
-  api_key:
-    secure: tas6g7o5bleaFS68B8r1Hip3nDutOGGFKZT9Gm8RETKeLioLSeB0eWSajhWAfLKf
-  artifact: /RedirectManager.Umbraco8\.(.*)\.nupkg/
+  - path: '**\*.nupkg'
+    name: NuGet
+for:
+
+-
+ branches:
+   only:
+     - master
+
+ deploy:
+ - provider: NuGet
+   api_key:
+     secure: tas6g7o5bleaFS68B8r1Hip3nDutOGGFKZT9Gm8RETKeLioLSeB0eWSajhWAfLKf
+   artifact: /.nupkg/
+   on:
+      APPVEYOR_REPO_TAG: true
