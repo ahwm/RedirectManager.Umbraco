@@ -294,7 +294,6 @@
             cache: false
         }).then(function (data) {
             vm.domainState = "";
-            console.log(data);
             overlayService.open({
                 title: "Set Primary Domain",
                 view: "/App_Plugins/Redirects/Views/Overlays/SetDomain.html",
