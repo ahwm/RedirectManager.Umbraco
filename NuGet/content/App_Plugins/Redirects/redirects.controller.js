@@ -288,7 +288,6 @@
     }
 
     function showPrimaryDomain() {
-        vm.domainState = "busy";
         $http({
             method: 'GET',
             url: '/Umbraco/backoffice/Api/RedirectApi/GetPrimaryDomain',
@@ -303,6 +302,7 @@
                 submitButtonLabel: "Set Primary Domain",
                 closeButtonLabel: "Cancel",
                 submit: function submit() {
+                    vm.domainState = "busy";
                     overlayService.close();
                     $http({
                         method: 'POST',
@@ -314,6 +314,7 @@
                     });
                 },
                 close: function close() {
+                    vm.domainState = "";
                     overlayService.close();
                 }
             });

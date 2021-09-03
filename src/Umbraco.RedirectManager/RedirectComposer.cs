@@ -76,7 +76,7 @@ namespace RedirectManager
                 if (ctx != null)
                 {
                     string primaryDomain = _redirectService.GetPrimaryDomain();
-                    if (!String.IsNullOrEmpty(primaryDomain))
+                    if (!String.IsNullOrEmpty(primaryDomain) && ctx.Request.Url.Host != "localhost")
                     {
                         if (primaryDomain != ctx.Request.Url.Host)
                         {
