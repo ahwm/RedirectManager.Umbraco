@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Scoping;
@@ -15,7 +17,26 @@ namespace RedirectManager
             scopeProvider = provider;
         }
 
-        public int GetRedirectPageCount()
+        internal string GetPrimaryDomain()
+        {
+            string appData = System.Web.Hosting.HostingEnvironment.MapPath("~/App_Plugins/Redirects");
+            if (!File.Exists(Path.Combine(appData, "primaryDomain.json")))
+                return "";
+            Dictionary<string, string> config = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(Path.Combine(appData, "primaryDomain.json")));
+            if (config == null)
+                return "";
+
+            return config["Domain"];
+        }
+
+        internal void SetPrimaryDomain(string domain)
+        {
+            string appData = System.Web.Hosting.HostingEnvironment.MapPath("~/App_Plugins/Redirects");
+            var config = new Dictionary<string, string> { { "Domain", domain } };
+            File.WriteAllText(Path.Combine(appData, "primaryDomain.json"), JsonConvert.SerializeObject(config));
+        }
+
+        internal int GetRedirectPageCount()
         {
             using (var scope = scopeProvider.CreateScope(autoComplete: true))
             {
@@ -26,7 +47,7 @@ namespace RedirectManager
             }
         }
 
-        public IEnumerable<Redirect> ListRedirects(int page = 1)
+        internal IEnumerable<Redirect> ListRedirects(int page = 1)
         {
             using (var scope = scopeProvider.CreateScope(autoComplete: true))
             {
@@ -37,7 +58,7 @@ namespace RedirectManager
             }
         }
 
-        public int GetFilterRedirectPageCount(string searchTerm)
+        internal int GetFilterRedirectPageCount(string searchTerm)
         {
             using (var scope = scopeProvider.CreateScope(autoComplete: true))
             {
@@ -48,7 +69,7 @@ namespace RedirectManager
             }
         }
 
-        public IEnumerable<Redirect> FilterRedirects(string searchTerm, int page = 1)
+        internal IEnumerable<Redirect> FilterRedirects(string searchTerm, int page = 1)
         {
             using (var scope = scopeProvider.CreateScope(autoComplete: true))
             {
@@ -59,7 +80,7 @@ namespace RedirectManager
             }
         }
 
-        public void DeleteRedirect(string id)
+        internal void DeleteRedirect(string id)
         {
             List<int> ids = id.Split(',').Select(x => Convert.ToInt32(x)).ToList();
             using (var scope = scopeProvider.CreateScope(autoComplete: true))
@@ -73,7 +94,7 @@ namespace RedirectManager
             }
         }
 
-        public string GetRedirectByUrl(string url)
+        internal string GetRedirectByUrl(string url)
         {
             using (var scope = scopeProvider.CreateScope(autoComplete: true))
             {
@@ -88,7 +109,7 @@ namespace RedirectManager
             }
         }
 
-        public void AddRedirect(string oldUrl, string newUrl)
+        internal void AddRedirect(string oldUrl, string newUrl)
         {
             if (!oldUrl.StartsWith("/"))
                 oldUrl = "/" + oldUrl;

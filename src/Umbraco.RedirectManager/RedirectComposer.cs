@@ -75,6 +75,17 @@ namespace RedirectManager
                 HttpContext ctx = HttpContext.Current;
                 if (ctx != null)
                 {
+                    string primaryDomain = _redirectService.GetPrimaryDomain();
+                    if (!String.IsNullOrEmpty(primaryDomain))
+                    {
+                        if (primaryDomain != ctx.Request.Url.Host)
+                        {
+                            var uri = new UriBuilder(ctx.Request.Url);
+                            uri.Host = primaryDomain;
+                            ctx.Response.RedirectPermanent(uri.ToString(), true);
+                            return;
+                        }
+                    }
                     string url = _redirectService.GetRedirectByUrl(ctx.Request.RawUrl);
                     if (!String.IsNullOrWhiteSpace(url))
                     {

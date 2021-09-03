@@ -46,6 +46,16 @@ namespace RedirectManager.Controllers
             RedirectService.DeleteRedirect(id);
         }
 
+        public string GetPrimaryDomain()
+        {
+            return RedirectService.GetPrimaryDomain();
+        }
+
+        public void SetPrimaryDomain(string domain)
+        {
+            RedirectService.SetPrimaryDomain(domain);
+        }
+
         public void AddRedirect()
         {
             var data = HttpContext.Current.Request.InputStream;
@@ -59,12 +69,6 @@ namespace RedirectManager.Controllers
         public void ImportRedirects()
         {
             var file = HttpContext.Current.Request.Files[0];
-            //byte[] data;
-            //using (MemoryStream ms = new MemoryStream())
-            //{
-            //    file.InputStream.CopyTo(ms);
-            //    data = ms.ToArray();
-            //}
             DataTable data = new DataTable();
             string ext = Path.GetExtension(file.FileName);
             switch (ext)
