@@ -1,6 +1,6 @@
 ﻿
 <div ng-controller="RedirectsController as vm">
-    <umb-editor-view footer="true">
+    <umb-editor-view footer="false">
         <umb-editor-header name="vm.page.name"
                            hide-alias="true"
                            hide-description="true"
@@ -60,6 +60,9 @@
         </umb-editor-container>
 
         <umb-editor-footer>
+            <umb-editor-footer-content-left>
+                <umb-button type="button" action="vm.showPrimaryDomain()" label="Set Primary Domain" state="vm.domainState"></umb-button>
+            </umb-editor-footer-content-left>
             <umb-editor-footer-content-right id="bulkActions" style="display:none;">
                 <umb-button type="button" action="vm.deleteRedirects()" button-style="success" label="Delete" state="vm.deleteState"></umb-button>
             </umb-editor-footer-content-right>
