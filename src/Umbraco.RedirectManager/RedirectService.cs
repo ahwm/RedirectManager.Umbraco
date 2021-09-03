@@ -29,6 +29,11 @@ namespace RedirectManager
             return config["Domain"];
         }
 
+        internal void IncrementCD()
+        {
+            ClientDependency.Core.Config.ClientDependencySettings.Instance.Version = ClientDependency.Core.Config.ClientDependencySettings.Instance.Version + 1;
+        }
+
         internal void SetPrimaryDomain(string domain)
         {
             string appData = System.Web.Hosting.HostingEnvironment.MapPath("~/App_Plugins/Redirects");
