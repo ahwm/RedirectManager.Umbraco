@@ -17,8 +17,11 @@
     vm.items = [];
     vm.selection = [];
     vm.deleteState = "";
+    vm.domainState = "";
     vm.addState = "";
     vm.allowSelectAll = true;
+    vm.showPrimaryDomain = showPrimaryDomain;
+    vm.primaryDomain = "";
 
     vm.selectItem = selectItem;
     vm.selectAll = selectAll;
@@ -282,5 +285,39 @@
             }
         };
         overlayService.open(confirm);
+    }
+
+    function showPrimaryDomain() {
+        $http({
+            method: 'GET',
+            url: '/Umbraco/backoffice/Api/RedirectApi/GetPrimaryDomain',
+            cache: false
+        }).then(function (data) {
+            vm.domainState = "";
+            console.log(data);
+            overlayService.open({
+                title: "Set Primary Domain",
+                view: "/App_Plugins/Redirects/Views/Overlays/SetDomain.html",
+                domain: data.data,
+                submitButtonLabel: "Set Primary Domain",
+                closeButtonLabel: "Cancel",
+                submit: function submit() {
+                    vm.domainState = "busy";
+                    overlayService.close();
+                    $http({
+                        method: 'POST',
+                        url: '/Umbraco/backoffice/Api/RedirectApi/SetPrimaryDomain?domain=' + document.getElementById('txtDomain').value,
+                        cache: false
+                    }).then(function (data) {
+                        vm.domainState = "success";
+                        vm.primaryDomain = document.getElementById('txtDomain').value;
+                    });
+                },
+                close: function close() {
+                    vm.domainState = "";
+                    overlayService.close();
+                }
+            });
+        });
     }
 });

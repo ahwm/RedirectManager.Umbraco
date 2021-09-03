@@ -1,9 +1,9 @@
-version: 1.0.2.{build}
+version: 1.1.0.{build}
 image: Visual Studio 2019
 configuration: Release
 before_build:
 - ps: >-
-    $version = '1.0.2'
+    $version = '1.1.0'
 
     nuget restore src\Umbraco.RedirectManager.sln
 
@@ -13,12 +13,12 @@ before_build:
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: '1.0.2'
-  version_prefix: '1.0.2'
-  package_version: '1.0.2'
-  assembly_version: '1.0.2'
-  file_version: '1.0.2'
-  informational_version: '1.0.2'
+  version: '1.1.0'
+  version_prefix: '1.1.0'
+  package_version: '1.1.0'
+  assembly_version: '1.1.0'
+  file_version: '1.1.0'
+  informational_version: '1.1.0'
 build:
   verbosity: minimal
 artifacts:
