@@ -10,15 +10,8 @@ before_build:
     nuget pack NuGet\Umbraco.RedirectManager.nuspec -Version $version -p "commitid=$env:APPVEYOR_REPO_COMMIT;coreVersion=$version;releaseNotes=$env:APPVEYOR_REPO_COMMIT_MESSAGE$env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"
 
     (Get-Content -path src\Umbraco.RedirectManager\Umbraco.RedirectManager.csproj -Raw) -replace '%releaseNotes%',"$env:APPVEYOR_REPO_COMMIT_MESSAGE$env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"| Set-Content -Path src\Umbraco.RedirectManager\Umbraco.RedirectManager.csproj
-dotnet_csproj:
-  patch: true
-  file: '**\*.csproj'
-  version: '1.1.0'
-  version_prefix: '1.1.0'
-  package_version: '1.1.0'
-  assembly_version: '1.1.0'
-  file_version: '1.1.0'
-  informational_version: '1.1.0'
+	
+	(Get-Content -path src\Umbraco.RedirectManager\Umbraco.RedirectManager.csproj -Raw) -replace '%version%',"$version"| Set-Content -Path src\Umbraco.RedirectManager\Umbraco.RedirectManager.csproj
 build:
   verbosity: minimal
 artifacts:
