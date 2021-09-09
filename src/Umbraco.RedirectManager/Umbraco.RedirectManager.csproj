@@ -13,7 +13,7 @@
 		<PackageReleaseNotes>%releaseNotes%; please report issues at https://github.com/ahwm/RedirectManager.Umbraco/issues</PackageReleaseNotes>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Version>%version%</Version>
+		<Version>1.0.2</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
