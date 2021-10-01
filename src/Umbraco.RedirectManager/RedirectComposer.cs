@@ -1,52 +1,71 @@
-﻿using NPoco;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NPoco;
 using System;
-using System.Web;
-using Umbraco.Core;
-using Umbraco.Core.Composing;
-using Umbraco.Core.Logging;
-using Umbraco.Core.Migrations;
-using Umbraco.Core.Migrations.Upgrade;
-using Umbraco.Core.Persistence.DatabaseAnnotations;
-using Umbraco.Core.Scoping;
-using Umbraco.Core.Services;
-using Umbraco.Web;
-using Umbraco.Web.Sections;
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Composing;
+using Umbraco.Cms.Core.DependencyInjection;
+using Umbraco.Cms.Core.Migrations;
+using Umbraco.Cms.Core.Scoping;
+using Umbraco.Cms.Core.Sections;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Infrastructure.Migrations;
+using Umbraco.Cms.Infrastructure.Migrations.Upgrade;
+using Umbraco.Cms.Infrastructure.Persistence.DatabaseAnnotations;
+using Umbraco.Cms.Web.Common.ApplicationBuilder;
+using Umbraco.Extensions;
 
 namespace RedirectManager
 {
-    public class RedirectUserComposer : IUserComposer
+    public class RedirectUserComposer : IComposer
     {
-        public void Compose(Composition composition)
+        public void Compose(IUmbracoBuilder builder)
         {
-            composition.Sections().InsertBefore<PackagesSection, RedirectSection>();
-            composition.Register<RedirectService>();
+            builder.Sections().InsertBefore<PackagesSection, RedirectSection>();
+            builder.Services.AddUnique<RedirectService>();
+            builder.Services.Configure<UmbracoPipelineOptions>(options => {
+                options.AddFilter(new UmbracoPipelineFilter(
+                    "RedirectManager",
+                    _ => { },
+                    applicationBuilder => {
+                        applicationBuilder.UseMiddleware<RedirectsMiddleware>();
+                    },
+                    _ => { }
+                ));
+            });
         }
     }
 
     public class RedirectComposer : ComponentComposer<RedirectComponent>
     { }
 
-    [RuntimeLevel(MinLevel = Umbraco.Core.RuntimeLevel.Run)]
     public class RedirectComponent : IComponent
     {
         private readonly IScopeProvider _scopeProvider;
-        private readonly IMigrationBuilder _migrationBuilder;
+        private readonly IMigrationPlanExecutor _migrationPlanExecutor;
         private readonly IKeyValueService _keyValueService;
         private readonly ILogger _logger;
+        private readonly IRuntimeState _runtimeState;
         private readonly RedirectService _redirectService;
 
-        public RedirectComponent(IScopeProvider scopeProvider, IMigrationBuilder migrationBuilder, IKeyValueService keyValueService, ILogger logger, RedirectService redirectService)
+        public RedirectComponent(IMigrationPlanExecutor migrationPlanExecutor, IScopeProvider scopeProvider, IKeyValueService keyValueService, ILogger logger, IRuntimeState runtimeState, RedirectService redirectService)
         {
+            _migrationPlanExecutor = migrationPlanExecutor;
             _scopeProvider = scopeProvider;
-            _migrationBuilder = migrationBuilder;
             _keyValueService = keyValueService;
             _logger = logger;
             _redirectService = redirectService;
+            _runtimeState = runtimeState;
         }
 
         public void Initialize()
         {
-            UmbracoApplicationBase.ApplicationInit += UmbracoApplicationBase_ApplicationInit;
+            if (_runtimeState.Level < RuntimeLevel.Run)
+            {
+                return;
+            }
+            //UmbracoApplicationBase.ApplicationInit += UmbracoApplicationBase_ApplicationInit;
             // Create a migration plan for a specific project/feature
             // We can then track that latest migration state/step for this project/feature
             var migrationPlan = new MigrationPlan("Redirects");
@@ -58,48 +77,10 @@ namespace RedirectManager
             // Go and upgrade our site (Will check if it needs to do the work or not)
             // Based on the current/latest step
             var upgrader = new Upgrader(migrationPlan);
-            upgrader.Execute(_scopeProvider, _migrationBuilder, _keyValueService, _logger);
+            upgrader.Execute(_migrationPlanExecutor, _scopeProvider, _keyValueService);
         }
 
-        private void UmbracoApplicationBase_ApplicationInit(object sender, EventArgs e)
-        {
-            if (!(sender is HttpApplication app)) return;
-
-            app.BeginRequest += App_BeginRequest;
-        }
-
-        private void App_BeginRequest(object sender, EventArgs e)
-        {
-            try
-            {
-                HttpContext ctx = HttpContext.Current;
-                if (ctx != null)
-                {
-                    string primaryDomain = _redirectService.GetPrimaryDomain();
-                    if (!String.IsNullOrEmpty(primaryDomain) && ctx.Request.Url.Host != "localhost")
-                    {
-                        if (primaryDomain != ctx.Request.Url.Host)
-                        {
-                            var uri = new UriBuilder(ctx.Request.Url);
-                            uri.Host = primaryDomain;
-                            ctx.Response.RedirectPermanent(uri.ToString(), true);
-                            return;
-                        }
-                    }
-                    string url = _redirectService.GetRedirectByUrl(ctx.Request.RawUrl);
-                    if (!String.IsNullOrWhiteSpace(url))
-                    {
-                        ctx.Response.RedirectPermanent(url, true);
-                    }
-                }
-            }
-            catch { }
-        }
-
-        public void Terminate()
-        {
-            UmbracoApplicationBase.ApplicationInit -= UmbracoApplicationBase_ApplicationInit;
-        }
+        public void Terminate() { }
     }
 
     public class AddRedirectsTable : MigrationBase
@@ -107,9 +88,9 @@ namespace RedirectManager
         public AddRedirectsTable(IMigrationContext context) : base(context)
         { }
 
-        public override void Migrate()
+        protected override void Migrate()
         {
-            Logger.Debug<AddRedirectsTable>("Running migration {MigrationStep}", "AddRedirectsTable");
+            Logger.LogDebug("Running migration {MigrationStep}", "AddRedirectsTable");
 
             // Lots of methods available in the MigrationBase class - discover with this.
             if (TableExists("Redirect") == false)
@@ -118,7 +99,7 @@ namespace RedirectManager
             }
             else
             {
-                Logger.Debug<AddRedirectsTable>("The database table {DbTable} already exists, skipping", "Redirect");
+                Logger.LogDebug("The database table {DbTable} already exists, skipping", "Redirect");
             }
         }
 

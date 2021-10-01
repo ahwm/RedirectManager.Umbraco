@@ -1,4 +1,4 @@
-﻿using Umbraco.Core.Models.Sections;
+﻿using Umbraco.Cms.Core.Sections;
 
 namespace RedirectManager
 {

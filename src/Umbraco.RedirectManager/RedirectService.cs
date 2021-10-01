@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Umbraco.Core.Persistence;
-using Umbraco.Core.Scoping;
+using Umbraco.Cms.Core.Scoping;
+using Umbraco.Extensions;
 
 namespace RedirectManager
 {
@@ -19,7 +19,7 @@ namespace RedirectManager
 
         internal string GetPrimaryDomain()
         {
-            string appData = System.Web.Hosting.HostingEnvironment.MapPath("~/App_Plugins/Redirects");
+            string appData = AppDomain.CurrentDomain.BaseDirectory + "/App_Plugins/Redirects";
             if (!File.Exists(Path.Combine(appData, "primaryDomain.json")))
                 return "";
             Dictionary<string, string> config = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(Path.Combine(appData, "primaryDomain.json")));
@@ -29,14 +29,9 @@ namespace RedirectManager
             return config["Domain"];
         }
 
-        internal void IncrementCD()
-        {
-            ClientDependency.Core.Config.ClientDependencySettings.Instance.Version = ClientDependency.Core.Config.ClientDependencySettings.Instance.Version + 1;
-        }
-
         internal void SetPrimaryDomain(string domain)
         {
-            string appData = System.Web.Hosting.HostingEnvironment.MapPath("~/App_Plugins/Redirects");
+            string appData = AppDomain.CurrentDomain.BaseDirectory + "/App_Plugins/Redirects";
             var config = new Dictionary<string, string> { { "Domain", domain } };
             File.WriteAllText(Path.Combine(appData, "primaryDomain.json"), JsonConvert.SerializeObject(config));
         }
@@ -123,7 +118,7 @@ namespace RedirectManager
             {
                 var sql = scope.SqlContext.Sql()
                     .SelectCount("*").From("Redirect").Where<Redirect>(x => x.OldUrl == oldUrl);
-                
+
                 num = scope.Database.ExecuteScalar<int>(sql);
             }
             if (num == 0)

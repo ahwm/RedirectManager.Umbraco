@@ -1,5 +1,5 @@
 ﻿using System;
-using Umbraco.Core.Dashboards;
+using Umbraco.Cms.Core.Dashboards;
 
 namespace RedirectManager
 {

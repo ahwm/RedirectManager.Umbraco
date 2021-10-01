@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Web;
-using Umbraco.Web.WebApi;
+using Umbraco.Cms.Web.BackOffice.Controllers;
 
 namespace RedirectManager.Controllers
 {
@@ -58,7 +58,7 @@ namespace RedirectManager.Controllers
 
         public void AddRedirect()
         {
-            var data = HttpContext.Current.Request.InputStream;
+            var data = Request.Body;
             string urls;
             using (StreamReader sr = new StreamReader(data))
                 urls = sr.ReadToEnd();
@@ -68,23 +68,26 @@ namespace RedirectManager.Controllers
 
         public void ImportRedirects()
         {
-            var file = HttpContext.Current.Request.Files[0];
+            var file = Request.Form.Files[0];
             DataTable data = new DataTable();
             string ext = Path.GetExtension(file.FileName);
+            using MemoryStream ms = new MemoryStream();
+            file.CopyTo(ms);
+            ms.Position = 0;
             switch (ext)
             {
                 case ".xls":
-                    data = xlsToDT(file.InputStream);
+                    data = xlsToDT(ms);
                     break;
                 case ".xlsx":
-                    data = xlsxToDT(file.InputStream);
+                    data = xlsxToDT(ms);
                     break;
                 case ".txt":
                 case ".tsv":
-                    data = ImportTxt(file.InputStream, '\t');
+                    data = ImportTxt(ms, '\t');
                     break;
                 case ".csv":
-                    data = ImportTxt(file.InputStream,',');
+                    data = ImportTxt(ms,',');
                     break;
             }
             foreach (DataRow r in data.Rows)
