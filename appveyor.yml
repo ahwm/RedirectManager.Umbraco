@@ -3,7 +3,7 @@ image: Visual Studio 2019
 configuration: Debug
 before_build:
 - ps: >-
-    nuget restore src\Umbraco.RedirectManager.sln
+    dotnet restore src\Umbraco.RedirectManager.sln
 
     nuget pack NuGet\Umbraco.RedirectManager.nuspec -suffix ci -Version $env:APPVEYOR_BUILD_VERSION -p "commitid=$env:APPVEYOR_REPO_COMMIT;coreVersion=$env:APPVEYOR_BUILD_VERSION-ci;releaseNotes=$env:APPVEYOR_REPO_COMMIT_MESSAGE$env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"
 

@@ -13,7 +13,7 @@
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 
         <dependencies>
-			<dependency id="RedirectManager.Umbraco8.Core" version="$coreVersion$" />
+			<dependency id="RedirectManager.Umbraco9.Core" version="$coreVersion$" />
 		</dependencies>
     </metadata>
 </package>
