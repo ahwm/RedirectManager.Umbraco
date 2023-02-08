@@ -1,7 +1,7 @@
 # Redirect Manager for Umbraco
 
 [![Build status](https://ci.appveyor.com/api/projects/status/95e8264cttd50qg3/branch/master)](https://ci.appveyor.com/project/ahwm/redirectmanager-umbraco/branch/master)
-[![NuGet Status](https://buildstats.info/nuget/RedirectManager.Umbraco8)](https://www.nuget.org/packages/RedirectManager.Umbraco8/)
+[![NuGet Status](https://buildstats.info/nuget/our.Umbraco.RedirectManager)](https://www.nuget.org/packages/our.Umbraco.RedirectManager/)
 
 ![image](https://user-images.githubusercontent.com/20478373/129051682-48203c60-3075-44c0-8c52-8aaf1f78a6af.png)
 

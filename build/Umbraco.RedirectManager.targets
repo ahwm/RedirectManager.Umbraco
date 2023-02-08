@@ -1,0 +1,27 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+        <redirectsContentFilesPath>$(MSBuildThisFileDirectory)..\App_Plugins\Redirects\**\*.*</redirectsContentFilesPath>
+    </PropertyGroup>
+
+    <Target Name="CopyakismetAssets" BeforeTargets="Build">
+        <ItemGroup>
+            <redirectsContentFiles Include="$(redirectsContentFilesPath)" />
+        </ItemGroup>
+        <Message Text="Copying redirects files: $(redirectsContentFilesPath) - #@(redirectsContentFiles->Count()) files"  Importance="high" />
+        <Copy
+            SourceFiles="@(redirectsContentFiles)"
+            DestinationFiles="@(redirectsContentFiles->'$(MSBuildProjectDirectory)\App_Plugins\Redirects\%(RecursiveDir)%(Filename)%(Extension)')"
+            SkipUnchangedFiles="true" />
+
+    </Target>
+
+    <Target Name="ClearRedirectsAssets" BeforeTargets="Clean">
+        <ItemGroup>
+            <redirectsDir Include="$(MSBuildProjectDirectory)\App_Plugins\Redirects\" />
+        </ItemGroup>
+        <Message Text="Clear old redirects data"  Importance="high" />
+        <RemoveDir Directories="@(redirectsDir)"  />
+    </Target>
+
+</Project>

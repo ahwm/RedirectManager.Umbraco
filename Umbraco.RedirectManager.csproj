@@ -2,19 +2,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
-		<PackageId>RedirectManager.Umbraco9.Core</PackageId>
+		<PackageId>Our.Umbraco.RedirectManager</PackageId>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Adam Humpherys</Authors>
-		<Description>Redirect Manager for Umbraco 9</Description>
-		<Copyright>(c) 2021 Adam Humpherys</Copyright>
+		<Description>Redirect Manager for Umbraco (9+)</Description>
+		<Copyright>(c) 2023 Adam Humpherys</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/ahwm/RedirectManager.Umbraco</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ahwm/RedirectManager.Umbraco</RepositoryUrl>
 		<PackageReleaseNotes>%releaseNotes%; Report issues at https://github.com/ahwm/RedirectManager.Umbraco/issues</PackageReleaseNotes>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageTags>umbraco plugin redirects manager backoffice umbraco-marketplace</PackageTags>
 		<Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
 	</PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Umbraco.Cms.Web.Common" Version="[9.0,9.999999]" />
@@ -31,4 +37,15 @@
 			$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb
 		</AllowedOutputExtensionsInPackageBuildOutputFolder>
 	</PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="App_Plugins\Redirects\**\*.*">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+    <None Include="build\**\*.*">
+      <Pack>True</Pack>
+      <PackagePath>buildTransitive</PackagePath>
+    </None>
+  </ItemGroup>
 </Project>
