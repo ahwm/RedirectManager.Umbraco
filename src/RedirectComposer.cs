@@ -22,7 +22,7 @@ namespace RedirectManager
         public void Compose(IUmbracoBuilder builder)
         {
             builder.Sections().InsertBefore<PackagesSection, RedirectSection>();
-            builder.Services.AddSingleton<RedirectService>();
+            builder.Services.AddTransient<RedirectService>();
             builder.Services.Configure<UmbracoPipelineOptions>(options => {
                 options.AddFilter(new UmbracoPipelineFilter(
                     "RedirectManager",
@@ -44,16 +44,16 @@ namespace RedirectManager
         private readonly ICoreScopeProvider _coreScopeProvider;
         private readonly IMigrationPlanExecutor _migrationPlanExecutor;
         private readonly IKeyValueService _keyValueService;
-        private readonly ILogger _logger;
+        private readonly ILoggerFactory _loggerFactory;
         private readonly IRuntimeState _runtimeState;
         private readonly RedirectService _redirectService;
 
-        public RedirectComponent(IMigrationPlanExecutor migrationPlanExecutor, ICoreScopeProvider coreScopeProvider, IKeyValueService keyValueService, ILogger logger, IRuntimeState runtimeState, RedirectService redirectService)
+        public RedirectComponent(IMigrationPlanExecutor migrationPlanExecutor, ICoreScopeProvider coreScopeProvider, IKeyValueService keyValueService, ILoggerFactory loggerFactory, IRuntimeState runtimeState, RedirectService redirectService)
         {
             _migrationPlanExecutor = migrationPlanExecutor;
             _coreScopeProvider = coreScopeProvider;
             _keyValueService = keyValueService;
-            _logger = logger;
+            _loggerFactory = loggerFactory;
             _redirectService = redirectService;
             _runtimeState = runtimeState;
         }

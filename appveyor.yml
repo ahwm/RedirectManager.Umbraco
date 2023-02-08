@@ -3,13 +3,13 @@ image: Visual Studio 2022
 configuration: Release
 before_build:
 - ps: >-
-    $version = '3.0.0'
+    $version = '3.0.0.1'
 
-    (Get-Content -path Umbraco.RedirectManager.csproj -Raw) -replace '<Version>(.*)</Version>',"<Version>$version</Version>"| Set-Content -Path Umbraco.RedirectManager.csproj
+    (Get-Content -path Umbraco.RedirectManager.csproj -Raw) -replace '<Version>(.*)</Version>',"<Version>$version</Version>" | Set-Content -Path Umbraco.RedirectManager.csproj
 
     dotnet restore
 
-    (Get-Content -path Umbraco.RedirectManager.csproj -Raw) -replace '%releaseNotes%',"$env:APPVEYOR_REPO_COMMIT_MESSAGE$env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"| Set-Content -Path Umbraco.RedirectManager.csproj
+    (Get-Content -path Umbraco.RedirectManager.csproj -Raw) -replace '%releaseNotes%',"$env:APPVEYOR_REPO_COMMIT_MESSAGE$env:APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED" | Set-Content -Path Umbraco.RedirectManager.csproj
 build:
   verbosity: minimal
 artifacts:
