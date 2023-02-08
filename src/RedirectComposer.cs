@@ -22,7 +22,7 @@ namespace RedirectManager
         public void Compose(IUmbracoBuilder builder)
         {
             builder.Sections().InsertBefore<PackagesSection, RedirectSection>();
-            builder.Services.AddUnique<RedirectService>();
+            builder.Services.AddSingleton<RedirectService>();
             builder.Services.Configure<UmbracoPipelineOptions>(options => {
                 options.AddFilter(new UmbracoPipelineFilter(
                     "RedirectManager",
@@ -41,17 +41,17 @@ namespace RedirectManager
 
     public class RedirectComponent : IComponent
     {
-        private readonly IScopeProvider _scopeProvider;
+        private readonly ICoreScopeProvider _coreScopeProvider;
         private readonly IMigrationPlanExecutor _migrationPlanExecutor;
         private readonly IKeyValueService _keyValueService;
         private readonly ILogger _logger;
         private readonly IRuntimeState _runtimeState;
         private readonly RedirectService _redirectService;
 
-        public RedirectComponent(IMigrationPlanExecutor migrationPlanExecutor, IScopeProvider scopeProvider, IKeyValueService keyValueService, ILogger logger, IRuntimeState runtimeState, RedirectService redirectService)
+        public RedirectComponent(IMigrationPlanExecutor migrationPlanExecutor, ICoreScopeProvider coreScopeProvider, IKeyValueService keyValueService, ILogger logger, IRuntimeState runtimeState, RedirectService redirectService)
         {
             _migrationPlanExecutor = migrationPlanExecutor;
-            _scopeProvider = scopeProvider;
+            _coreScopeProvider = coreScopeProvider;
             _keyValueService = keyValueService;
             _logger = logger;
             _redirectService = redirectService;
@@ -76,7 +76,7 @@ namespace RedirectManager
             // Go and upgrade our site (Will check if it needs to do the work or not)
             // Based on the current/latest step
             var upgrader = new Upgrader(migrationPlan);
-            upgrader.Execute(_migrationPlanExecutor, _scopeProvider, _keyValueService);
+            upgrader.Execute(_migrationPlanExecutor, _coreScopeProvider, _keyValueService);
         }
 
         public void Terminate() { }

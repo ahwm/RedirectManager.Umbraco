@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Umbraco.Cms.Core.Scoping;
+using Umbraco.Cms.Infrastructure.Scoping;
 using Umbraco.Extensions;
 
 namespace RedirectManager
@@ -17,7 +17,7 @@ namespace RedirectManager
             scopeProvider = provider;
         }
 
-        internal string GetPrimaryDomain()
+        internal static string GetPrimaryDomain()
         {
             string appData = AppDomain.CurrentDomain.BaseDirectory + "/App_Plugins/Redirects";
             if (!File.Exists(Path.Combine(appData, "primaryDomain.json")))
@@ -29,7 +29,7 @@ namespace RedirectManager
             return config["Domain"];
         }
 
-        internal void SetPrimaryDomain(string domain)
+        internal static void SetPrimaryDomain(string domain)
         {
             string appData = AppDomain.CurrentDomain.BaseDirectory + "/App_Plugins/Redirects";
             var config = new Dictionary<string, string> { { "Domain", domain } };

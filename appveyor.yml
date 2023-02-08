@@ -1,9 +1,9 @@
-version: 1.0.0.{build}
+version: 2.0.0.{build}
 image: Visual Studio 2022
 configuration: Release
 before_build:
 - ps: >-
-    $version = '1.0.0.1'
+    $version = '2.0.0'
 
     (Get-Content -path Umbraco.RedirectManager.csproj -Raw) -replace '<Version>(.*)</Version>',"<Version>$version</Version>"| Set-Content -Path Umbraco.RedirectManager.csproj
 

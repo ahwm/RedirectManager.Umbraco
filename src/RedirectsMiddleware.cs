@@ -24,7 +24,7 @@ namespace RedirectManager
             string pathAndQuery = context.Request.GetEncodedPathAndQuery();
             Uri url = new Uri(context.Request.GetEncodedUrl());
 
-            string primaryDomain = _redirectService.GetPrimaryDomain();
+            string primaryDomain = RedirectService.GetPrimaryDomain();
             if (!String.IsNullOrEmpty(primaryDomain) && url.Host != "localhost")
             {
                 if (primaryDomain != url.Host)
