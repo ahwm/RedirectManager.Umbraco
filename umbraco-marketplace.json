@@ -1,0 +1,29 @@
+{
+  "AuthorDetails": {
+    "Name": "Adam Humpherys",
+    "Url": "https://adamh.us"
+  },
+  "Category": "Editor Tools",
+  "LicenseType": "Free",
+  "PackageType": "Package",
+  "Title": "Redirect Manager for Umbraco",
+  "Screenshots": [
+    {
+      "ImageUrl": "https://user-images.githubusercontent.com/20478373/129051682-48203c60-3075-44c0-8c52-8aaf1f78a6af.png",
+      "Caption": "Backoffice dashboard example"
+    },    
+    {
+      "ImageUrl": "https://user-images.githubusercontent.com/20478373/127723706-64b02699-cc25-4f39-a893-8058ada09bbf.png",
+      "Caption": "Adding new redirect"
+    }
+  ],
+  "Tags": [
+    "redirects"
+  ],
+  "VersionSpecificPackageIds": [
+    {
+      "UmbracoMajorVersion": 8,
+      "PackageId": "RedirectManager.Umbraco8"
+    }
+  ]
+}
