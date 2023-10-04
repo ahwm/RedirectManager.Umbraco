@@ -1,5 +1,7 @@
 # Redirect Manager for Umbraco
 
+**:warning: PACKAGE NO LONGER MAINTAINED. PLEASE USE [Skybrud.Umbraco.Redirects](https://github.com/skybrud/Skybrud.Umbraco.Redirects) INSTEAD :warning:**
+
 [![Build status](https://ci.appveyor.com/api/projects/status/95e8264cttd50qg3/branch/master)](https://ci.appveyor.com/project/ahwm/redirectmanager-umbraco/branch/master)
 [![NuGet Status](https://buildstats.info/nuget/RedirectManager.Umbraco8)](https://www.nuget.org/packages/RedirectManager.Umbraco8/)
 
